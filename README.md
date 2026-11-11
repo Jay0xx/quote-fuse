@@ -32,4 +32,6 @@ The required `reactive-lib-omni` commit is **`3ade0dcf1d27e67e5783ef807e73a1b9e0
 
 The `script/Stage3-*.ps1` scripts deploy and verify the pool and settlement path, sign matching quotes, send one qualifying swap, poll all three chains, and prove the control/stale/fresh outcomes. They use an interactive **local Foundry keystore** selected by `-Account`; no private key or password is stored in this repository. `deployments/stage-3.json` records the verified addresses and public transaction evidence. See the [Stage 3 report](docs/stage-3-live-invalidation-report.md) before any new testnet run. The scripts are resumable from their recorded public state, but an already-fired qualifying swap must be inspected before any retry.
 
-No frontend or DoraHacks submission is included.
+## Frontend preview
+
+The wallet-free [Overview and Replay frontend](frontend/README.md) lives in `frontend/`. From that directory, run `npm install`, then `npm run dev` for a local preview or `npm run build` for a production bundle. It imports the verified [Stage 3 replay fixture](deployments/stage-3-replay.json). Live State and DoraHacks submission are later work.

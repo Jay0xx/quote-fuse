@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F8F7F2" />
+    <meta
+      name="description"
+      content="Replay a verified three-chain testnet run where Quote Fuse invalidated a stale signed quote before expiry."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Quote Fuse — Invalidate stale quotes</title>
+  </head>
+  <body>
+    <header class="nav-wrap">
+      <nav class="nav-pill" aria-label="Main navigation">
+        <a class="brand" href="#overview" aria-label="Quote Fuse Overview"
+          ><span class="brand-symbol" aria-hidden="true"><span></span></span
+          ><span>Quote Fuse</span></a
+        >
+        <div class="nav-pages">
+          <a href="#overview" data-route="overview">Overview</a>
+          <a href="#replay" data-route="replay">Replay</a>
+        </div>
+        <a
+          class="nav-github"
+          href="https://github.com/Jay0xx/quote-fuse"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub repository, opens in a new tab"
+          ><span>GitHub</span
+          ><svg viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M4 12 12 4M6 4h6v6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></a>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="view overview"
+        id="overview"
+        aria-labelledby="overview-title"
+      >
+        <div class="overview-shell">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="eyebrow-line"></span> QUOTE PROTECTION, PROVEN ON
+              TESTNET
+            </p>
+            <h1 id="overview-title">
+              Invalidate stale quotes <em>before</em> they expire.
+            </h1>
+            <p class="hero-body">
+              When the reference price moves past a threshold, Quote Fuse
+              invalidates quotes signed against the old version.
+            </p>
+            <a class="primary-action" href="#replay"
+              >Replay the testnet run <span aria-hidden="true">↗</span></a
+            >
+            <div class="hero-proof">
+              <span class="proof-dot" aria-hidden="true"></span
+              ><a
+                href="https://sepolia.basescan.org/tx/0x90503742545a0928b9d4fb65a40338341f4f551cc76eeab829933da929d58271"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View the Base callback proof
+                <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </div>
+
+          <div
+            class="hero-visual"
+            id="hero-visual"
+            aria-label="Circuit diagram comparing matching control and protected quotes after a callback"
+          >
+            <div class="visual-topline">
+              <span
+                >ONE PRICE MOVE <span class="topline-arrow">→</span> TWO
+                OUTCOMES</span
+              ><span class="visual-run">RUN 001 / STAGE 3</span>
+            </div>
+            <div class="route-schematic">
+              <svg
+                class="route-line"
+                viewBox="0 0 560 90"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <path class="route-track" d="M40 46 H520" />
+                <path
+                  class="route-track-active"
+                  id="hero-signal-path"
+                  d="M40 46 H520"
+                />
+                <circle id="hero-marker" cx="40" cy="46" r="7" />
+              </svg>
+              <div class="route-node">
+                <span class="route-node__dot"></span><span>UNICHAIN</span
+                ><small>Price move</small>
+              </div>
+              <div class="route-node">
+                <span class="route-node__dot"></span><span>LASNA</span
+                ><small>Threshold met</small>
+              </div>
+              <div class="route-node">
+                <span class="route-node__dot"></span><span>BASE</span
+                ><small>Callback</small>
+              </div>
+            </div>
+            <div class="version-bar">
+              <span>PROTECTED SETTLEMENT VERSION</span
+              ><strong
+                ><span>v0</span><span class="version-arrow">→</span
+                ><span id="hero-version">v0</span></strong
+              >
+            </div>
+            <div class="quote-lanes">
+              <article
+                class="hero-slip hero-slip--control"
+                aria-label="Control quote"
+              >
+                <div class="slip-line">
+                  <span class="slip-line__label">01 / CONTROL PATH</span
+                  ><span
+                    class="slip-wire slip-wire--continuous"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+                <div class="slip-main">
+                  <div>
+                    <h2>Control quote</h2>
+                    <p>100 QSA <span>for</span> 99.8003 QSB</p>
+                  </div>
+                  <span
+                    class="outcome outcome--fillable"
+                    id="hero-control-status"
+                    >Fillable</span
+                  >
+                </div>
+                <p class="slip-foot">
+                  Signed v0 <span>·</span> No version gate
+                </p>
+              </article>
+              <article
+                class="hero-slip hero-slip--protected"
+                aria-label="Protected quote"
+              >
+                <div class="slip-line">
+                  <span class="slip-line__label">02 / PROTECTED PATH</span
+                  ><span class="slip-wire slip-wire--fused" aria-hidden="true"
+                    ><span class="fuse-switch"></span
+                  ></span>
+                </div>
+                <div class="slip-main">
+                  <div>
+                    <h2>Protected quote</h2>
+                    <p>100 QSA <span>for</span> 99.8003 QSB</p>
+                  </div>
+                  <span
+                    class="outcome outcome--protected"
+                    id="hero-protected-status"
+                    >Fillable</span
+                  >
+                </div>
+                <p class="slip-foot">
+                  Signed v0 <span>·</span> Version gate
+                  <span id="hero-gate-text">closed</span>
+                </p>
+              </article>
+            </div>
+            <div class="visual-caption">
+              <span class="caption-spark" aria-hidden="true">✳</span
+              ><span id="hero-caption"
+                >Awaiting the authenticated callback</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="view replay"
+        id="replay"
+        aria-labelledby="replay-title"
+        hidden
+      >
+        <div class="replay-shell">
+          <div class="replay-header">
+            <div>
+              <p class="eyebrow">
+                <span class="eyebrow-line"></span> VERIFIED RUN / 11 NOV 2026
+              </p>
+              <h1 id="replay-title">Follow the invalidation.</h1>
+              <p>
+                A wallet-free replay of one recorded swap, one callback, and
+                three quote outcomes.
+              </p>
+            </div>
+            <div class="timing-note">
+              <strong id="observed-time">10.43 s observed</strong
+              ><span>One recorded run · 1 s polling</span>
+            </div>
+          </div>
+
+          <div class="transport" role="group" aria-label="Replay controls">
+            <button type="button" id="play-button">
+              Play <span aria-hidden="true">▶</span></button
+            ><button type="button" id="pause-button">
+              Pause <span aria-hidden="true">Ⅱ</span></button
+            ><button type="button" id="step-button">
+              Step <span aria-hidden="true">→</span></button
+            ><button type="button" id="reset-button">
+              Reset <span aria-hidden="true">↺</span></button
+            ><span class="transport-count" id="transport-count">00 / 05</span>
+          </div>
+          <div
+            class="step-track"
+            id="step-track"
+            aria-label="Replay steps"
+          ></div>
+          <div class="replay-status" role="status" aria-live="polite">
+            <span class="status-asterisk" aria-hidden="true">✳</span
+            ><span id="replay-status-text"
+              >Two matching v0 quotes are fillable before the swap.</span
+            >
+          </div>
+
+          <div class="replay-grid">
+            <section class="threshold-panel" aria-labelledby="threshold-title">
+              <div class="panel-heading">
+                <span>01 / SOURCE SIGNAL</span>
+                <h2 id="threshold-title">The threshold crossing</h2>
+              </div>
+              <div class="price-pair">
+                <div>
+                  <small>REFERENCE</small
+                  ><strong id="price-before">0.998003</strong>
+                </div>
+                <span aria-hidden="true">→</span>
+                <div>
+                  <small>AFTER SWAP</small
+                  ><strong id="price-after">0.959287</strong>
+                </div>
+              </div>
+              <p class="unit-label">QFB per QFA · token 1 per token 0</p>
+              <div class="meter-head">
+                <strong id="move-value">0 bps</strong
+                ><span>300 bps threshold</span>
+              </div>
+              <div
+                class="meter"
+                aria-label="Price movement versus 300 basis point threshold"
+              >
+                <div class="meter-fill" id="meter-fill"></div>
+                <span class="meter-tick" aria-hidden="true"></span>
+              </div>
+              <p class="meter-note" id="meter-note">
+                A 20 QFA swap updates the pool reserves. Replay to see the move.
+              </p>
+            </section>
+            <section class="version-panel" aria-labelledby="version-title">
+              <div class="panel-heading">
+                <span>02 / CALLBACK EFFECT</span>
+                <h2 id="version-title">Version opens the switch</h2>
+              </div>
+              <div class="version-flow">
+                <span>Signed quote <b>v0</b></span
+                ><span class="flow-arrow" aria-hidden="true">→</span
+                ><span>Base settlement <b id="replay-version">v0</b></span>
+              </div>
+              <div class="switch-display" id="switch-display">
+                <span class="switch-track" aria-hidden="true"
+                  ><span class="switch-blade"></span></span
+                ><span id="switch-label">Circuit closed · quote fillable</span>
+              </div>
+              <p class="version-note">
+                The control path has no version gate. The protected path opens
+                when Base applies v1.
+              </p>
+            </section>
+          </div>
+
+          <section class="chain-section" aria-labelledby="chain-title">
+            <div class="section-line">
+              <h2 id="chain-title">Three receipts, one path</h2>
+              <span>SELECT A CHAIN TO INSPECT</span>
+            </div>
+            <div class="chain-route" id="chain-route">
+              <button
+                type="button"
+                class="chain-node"
+                data-chain="unichain"
+                aria-pressed="true"
+              >
+                <span class="chain-index">01</span
+                ><strong>Unichain Sepolia</strong><small>Pool swap · 1301</small
+                ><span class="chain-result" id="node-unichain"
+                  >Awaiting swap</span
+                ></button
+              ><span class="chain-connector" aria-hidden="true"></span
+              ><button
+                type="button"
+                class="chain-node"
+                data-chain="lasna"
+                aria-pressed="false"
+              >
+                <span class="chain-index">02</span
+                ><strong>Reactive Lasna</strong><small>Reaction · 5318007</small
+                ><span class="chain-result" id="node-lasna"
+                  >Awaiting reaction</span
+                ></button
+              ><span class="chain-connector" aria-hidden="true"></span
+              ><button
+                type="button"
+                class="chain-node"
+                data-chain="base"
+                aria-pressed="false"
+              >
+                <span class="chain-index">03</span><strong>Base Sepolia</strong
+                ><small>Callback · 84532</small
+                ><span class="chain-result" id="node-base"
+                  >Awaiting callback</span
+                >
+              </button>
+            </div>
+            <div class="evidence" id="evidence" aria-live="polite"></div>
+          </section>
+
+          <section class="outcomes-section" aria-labelledby="outcomes-title">
+            <div class="section-line">
+              <h2 id="outcomes-title">Same quote. Different result.</h2>
+              <span>100 QSA / 99.8003 QSB · EXPIRY 18 NOV 2026</span>
+            </div>
+            <div class="outcome-grid">
+              <article class="result-card" id="result-control">
+                <div class="result-card__top">
+                  <span>CONTROL / SIGNED v0</span
+                  ><span class="result-pill" id="control-result-pill"
+                    >Ready</span
+                  >
+                </div>
+                <h3>Control quote</h3>
+                <p>
+                  Fills after the pool moves because it does not enforce the
+                  settlement version.
+                </p>
+                <div class="result-card__bottom" id="control-result-detail">
+                  Waiting for the recorded fill
+                </div>
+              </article>
+              <article class="result-card" id="result-protected">
+                <div class="result-card__top">
+                  <span>PROTECTED / SIGNED v0</span
+                  ><span class="result-pill" id="protected-result-pill"
+                    >Ready</span
+                  >
+                </div>
+                <h3>Protected quote</h3>
+                <p>The old signed version is rejected once Base applies v1.</p>
+                <div class="result-card__bottom" id="protected-result-detail">
+                  Waiting for the authenticated callback
+                </div>
+              </article>
+              <article class="result-card result-card--fresh" id="result-fresh">
+                <div class="result-card__top">
+                  <span>PROTECTED / SIGNED v1</span
+                  ><span class="result-pill" id="fresh-result-pill"
+                    >Pending</span
+                  >
+                </div>
+                <h3>Fresh quote</h3>
+                <p>
+                  Repriced to 95.9287 QSB at the new pool reference, with nonce
+                  2.
+                </p>
+                <div class="result-card__bottom" id="fresh-result-detail">
+                  Waiting for the fresh fill
+                </div>
+              </article>
+            </div>
+          </section>
+          <p class="replay-footnote">
+            Historical Stage 3 evidence from
+            <a
+              href="https://github.com/Jay0xx/quote-fuse/blob/main/deployments/stage-3-replay.json"
+              target="_blank"
+              rel="noopener noreferrer"
+              >the verified replay fixture ↗</a
+            >. No wallet required. Live State follows in a later pass.
+          </p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
