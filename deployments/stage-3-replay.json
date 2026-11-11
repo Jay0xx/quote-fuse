@@ -1,0 +1,417 @@
+{
+  "schemaVersion": "1.0.0",
+  "stage": "3",
+  "description": "Machine-readable replay fixture from the verified Stage 3 live pool-driven quote invalidation run.",
+  "sourceOfTruth": {
+    "manifestPath": "deployments/stage-3.json",
+    "reportPath": "docs/stage-3-live-invalidation-report.md",
+    "recordedDate": "2026-11-11",
+    "deployer": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf"
+  },
+  "networks": {
+    "unichainSepolia": {
+      "name": "Unichain Sepolia",
+      "chainId": 1301,
+      "rpcUrl": "https://sepolia.unichain.org",
+      "explorerUrl": "https://sepolia.uniscan.xyz",
+      "contracts": {
+        "pool": {
+          "address": "0x51e7249e7A5a08CAcB388372947b34eE5BbD03ec",
+          "contractName": "ControlledPool",
+          "abiPath": "abi/ControlledPool.json"
+        },
+        "token0": {
+          "address": "0x8D32Fdd31fBAB4F6C484b0F5358d9Ae61d3DEc44",
+          "symbol": "QFA",
+          "decimals": 18
+        },
+        "token1": {
+          "address": "0x92aFcaAF8932062797c94ec8A1E57E40C93E7F26",
+          "symbol": "QFB",
+          "decimals": 18
+        }
+      }
+    },
+    "reactiveLasna": {
+      "name": "Reactive Lasna",
+      "chainId": 5318007,
+      "rpcUrl": "https://lasna-rpc.rnk.dev/",
+      "explorerUrl": "https://lasna.reactscan.net",
+      "contracts": {
+        "subscriber": {
+          "address": "0xF4661247F45BC36BdBFdF355De965dE03DB5D467",
+          "contractName": "PoolPriceSubscriber",
+          "abiPath": "abi/PoolPriceSubscriber.json"
+        },
+        "systemContract": {
+          "address": "0x8888888888888888888888888888888888888888"
+        }
+      }
+    },
+    "baseSepolia": {
+      "name": "Base Sepolia",
+      "chainId": 84532,
+      "rpcUrl": "https://sepolia.base.org",
+      "explorerUrl": "https://sepolia.basescan.org",
+      "contracts": {
+        "controlSettlement": {
+          "address": "0x571d89770382C0697bF94523eB7dc56288fA6346",
+          "contractName": "QuoteSettlement",
+          "abiPath": "abi/QuoteSettlement.json",
+          "protectedMode": false
+        },
+        "protectedSettlement": {
+          "address": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+          "contractName": "QuoteSettlement",
+          "abiPath": "abi/QuoteSettlement.json",
+          "protectedMode": true
+        },
+        "versionReceiver": {
+          "address": "0x1f111Ad6583FC4dFACf260821de593029d7e7915",
+          "contractName": "QuoteVersionReceiver",
+          "abiPath": "abi/QuoteVersionReceiver.json"
+        },
+        "demoTaker": {
+          "address": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+          "contractName": "DemoTaker",
+          "abiPath": "abi/DemoTaker.json"
+        },
+        "callbackProxy": {
+          "address": "0x476F44b11F5C942c58f4c8E3d0300E5710743585"
+        },
+        "makerToken": {
+          "address": "0xD498FfB35de781dFF2EfDC310cf701B57aCb6aD8",
+          "symbol": "QSA",
+          "decimals": 18
+        },
+        "takerToken": {
+          "address": "0x54aA3F15ddF203dC17766941405ef9F801BA0ADC",
+          "symbol": "QSB",
+          "decimals": 18
+        }
+      }
+    }
+  },
+  "priceMove": {
+    "unit": "token1 per token0 in 18-decimal fixed point (1e18 scale)",
+    "formula": "floor(reserve1 * 10^18 / reserve0)",
+    "qualificationRule": "abs(newPrice - acceptedReference) * 10000 >= acceptedReference * thresholdBps",
+    "thresholdBps": 300,
+    "thresholdPercent": "3.00%",
+    "preSwap": {
+      "reserve0": "1001000000000000000000",
+      "reserve1": "999000999000999001000",
+      "acceptedReference": "998002996004994006",
+      "acceptedReferenceFormatted": "0.998002996004994006 QFB per QFA"
+    },
+    "qualifyingSwap": {
+      "method": "swapExact0For1(uint256,uint256)",
+      "tokenIn": "0x8D32Fdd31fBAB4F6C484b0F5358d9Ae61d3DEc44",
+      "tokenOut": "0x92aFcaAF8932062797c94ec8A1E57E40C93E7F26",
+      "amountIn": "20000000000000000000",
+      "amountInFormatted": "20 QFA",
+      "amountOut": "19569069520097923623",
+      "amountOutFormatted": "19.569069520097923623 QFB"
+    },
+    "postSwap": {
+      "reserve0": "1021000000000000000000",
+      "reserve1": "979431929480901077377",
+      "newPrice": "959286904486680780",
+      "acceptedReference": "959286904486680780",
+      "acceptedReferenceFormatted": "0.95928690448668078 QFB per QFA"
+    },
+    "delta": {
+      "direction": "downward",
+      "absoluteMove": "38716091518313226",
+      "moveBpsApprox": 387.93,
+      "exceededThreshold": true
+    }
+  },
+  "versions": {
+    "initialVersion": "0",
+    "requestedVersion": "1",
+    "appliedVersion": "1",
+    "controlSettlementVersion": "0",
+    "lasnaSubscriber": {
+      "contract": "0xF4661247F45BC36BdBFdF355De965dE03DB5D467",
+      "method": "latestVersionRequested()(uint256)",
+      "beforeSwap": "0",
+      "afterReaction": "1"
+    },
+    "baseProtectedSettlement": {
+      "contract": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+      "method": "quoteVersion()(uint256)",
+      "beforeCallback": "0",
+      "afterCallback": "1"
+    }
+  },
+  "quotes": {
+    "eip712Domain": {
+      "name": "Quote Fuse",
+      "version": "1",
+      "chainId": 84532,
+      "quoteType": "Quote(address maker,address taker,address makerToken,address takerToken,uint256 makerAmount,uint256 takerAmount,uint256 expiry,uint256 nonce,uint256 version)",
+      "quoteTypehash": "0x802a9b0c723ff3ff1f12d8461098410c21506e41c6b42eb165a34be460508c7e"
+    },
+    "expiry": "1795031195",
+    "expiryUtc": "2026-11-18T19:46:35Z",
+    "controlInitial": {
+      "label": "Control quote (version 0, nonce 1) — fills after pool move because control mode ignores version",
+      "settlement": "0x571d89770382C0697bF94523eB7dc56288fA6346",
+      "protectedMode": false,
+      "terms": {
+        "maker": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+        "taker": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+        "makerToken": "0xD498FfB35de781dFF2EfDC310cf701B57aCb6aD8",
+        "takerToken": "0x54aA3F15ddF203dC17766941405ef9F801BA0ADC",
+        "makerAmount": "100000000000000000000",
+        "takerAmount": "99800299600499400600",
+        "expiry": "1795031195",
+        "nonce": "1",
+        "version": "0"
+      },
+      "formatted": {
+        "makerAmount": "100 QSA",
+        "takerAmount": "99.8002996004994006 QSB",
+        "expiryUtc": "2026-11-18T19:46:35Z"
+      },
+      "quoteHash": "0x7709fd9a03873b63d1c142f2af7f81c81b1a66f5bec2da147382b0109f571ca4",
+      "signature": "0xb90c366722f0fd32221bc12f8e677102e68cb7da03f78515c1efa76530c7f4773a8dde92f23f6b72646291a344fd67bd8e3230f908efc4b17ad3d3b3ac4cb9da1c"
+    },
+    "protectedInitial": {
+      "label": "Stale protected quote (version 0, nonce 1) — rejected before expiry after callback advances version to 1",
+      "settlement": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+      "protectedMode": true,
+      "terms": {
+        "maker": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+        "taker": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+        "makerToken": "0xD498FfB35de781dFF2EfDC310cf701B57aCb6aD8",
+        "takerToken": "0x54aA3F15ddF203dC17766941405ef9F801BA0ADC",
+        "makerAmount": "100000000000000000000",
+        "takerAmount": "99800299600499400600",
+        "expiry": "1795031195",
+        "nonce": "1",
+        "version": "0"
+      },
+      "formatted": {
+        "makerAmount": "100 QSA",
+        "takerAmount": "99.8002996004994006 QSB",
+        "expiryUtc": "2026-11-18T19:46:35Z"
+      },
+      "quoteHash": "0x61ed64ea864a6f922bad80004a2695f031f81fdc2bb05e99d1c2bd8011e03182",
+      "signature": "0xb2b306712c3ef7f0df40f7aec4950937639b2b320a6126e315c00f99f453c847757d2cc895a7999338c9ceea30d67bf9e91692a3585402c22a61eee80cfff24a1b"
+    },
+    "protectedFresh": {
+      "label": "Fresh protected quote (version 1, nonce 2) — repriced to post-swap pool reference and filled",
+      "settlement": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+      "protectedMode": true,
+      "terms": {
+        "maker": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+        "taker": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+        "makerToken": "0xD498FfB35de781dFF2EfDC310cf701B57aCb6aD8",
+        "takerToken": "0x54aA3F15ddF203dC17766941405ef9F801BA0ADC",
+        "makerAmount": "100000000000000000000",
+        "takerAmount": "95928690448668078000",
+        "expiry": "1795031195",
+        "nonce": "2",
+        "version": "1"
+      },
+      "formatted": {
+        "makerAmount": "100 QSA",
+        "takerAmount": "95.928690448668078 QSB",
+        "expiryUtc": "2026-11-18T19:46:35Z"
+      },
+      "quoteHash": "0xa6b40593a1b9d0c3807c0a3996d84c3d135715a71c84e95d03053830c57da640",
+      "signature": "0xb0ce3b9c777e09ec7e3e8d43ba3454c51379cf2b722f8dc976a901dde0923a8f154b1c8baee2d6157f104ae7adb1521e7da5f06b7e9d1cb92072a9d239a965f31c"
+    }
+  },
+  "linkedTransactions": {
+    "unichainQualifyingSwap": {
+      "step": 1,
+      "role": "Unichain qualifying pool swap",
+      "chainId": 1301,
+      "transactionHash": "0xde5cf4eba5b9226c9a5a26b1d3cd6c9e0dec70fcf996020b69e6080ba3194e68",
+      "explorerUrl": "https://sepolia.uniscan.xyz/tx/0xde5cf4eba5b9226c9a5a26b1d3cd6c9e0dec70fcf996020b69e6080ba3194e68",
+      "status": "0x1",
+      "blockNumber": 67574196,
+      "blockNumberHex": "0x40719b4",
+      "gasUsed": 80593,
+      "gasUsedHex": "0x13ad1",
+      "emittedSync": {
+        "topic0": "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1",
+        "reserve0": "1021000000000000000000",
+        "reserve1": "979431929480901077377"
+      }
+    },
+    "lasnaReaction": {
+      "step": 2,
+      "role": "Reactive Lasna price subscriber reaction and callback request",
+      "chainId": 5318007,
+      "transactionHash": "0xa969f4e724be36142bd8a7fb48adf0e6f4f28a16127e09d948e18dc64e9bf75a",
+      "explorerUrl": "https://lasna.reactscan.net/tx/0xa969f4e724be36142bd8a7fb48adf0e6f4f28a16127e09d948e18dc64e9bf75a",
+      "status": "0x1",
+      "blockNumber": 8107954,
+      "blockNumberHex": "0x7bb7b2",
+      "gasUsed": 134337,
+      "gasUsedHex": "0x20cc1",
+      "refTx": "0xde5cf4eba5b9226c9a5a26b1d3cd6c9e0dec70fcf996020b69e6080ba3194e68",
+      "emittedReferenceAccepted": {
+        "topic0": "0x2529df87aae66195e9ef0405f4e6e8c65ea965f82f679f3c77b62e79ce11e5c3",
+        "previousPrice": "998002996004994006",
+        "newPrice": "959286904486680780",
+        "version": "1",
+        "originBlock": 67574196,
+        "logIndex": 0
+      },
+      "callbackRequest": {
+        "destinationChainId": 84532,
+        "recipient": "0x1f111Ad6583FC4dFACf260821de593029d7e7915",
+        "gasLimit": 300000
+      }
+    },
+    "baseVersionAdvance": {
+      "step": 3,
+      "role": "Base Sepolia authenticated callback advancing protected quote version",
+      "chainId": 84532,
+      "transactionHash": "0x90503742545a0928b9d4fb65a40338341f4f551cc76eeab829933da929d58271",
+      "explorerUrl": "https://sepolia.basescan.org/tx/0x90503742545a0928b9d4fb65a40338341f4f551cc76eeab829933da929d58271",
+      "status": "0x1",
+      "blockNumber": 57523785,
+      "blockNumberHex": "0x36dbe49",
+      "gasUsed": 91130,
+      "gasUsedHex": "0x163fa",
+      "to": "0x476F44b11F5C942c58f4c8E3d0300E5710743585",
+      "emittedVersionAdvanced": {
+        "topic0": "0x740d1eb35fec8d1bf95877f4947c22d666dc6d4fc9cce26e3328ddc8181d650f",
+        "previousVersion": "0",
+        "newVersion": "1"
+      }
+    },
+    "timingObservation": {
+      "label": "One observed run with 1s polling",
+      "observedIntervalSeconds": 10.430438,
+      "observedLatencyMs": 10430.438,
+      "pollIntervalMs": 1000,
+      "sourceSeenUtc": "2026-11-11T19:50:23.6512508Z",
+      "lasnaSeenUtc": "2026-11-11T19:50:31.7035758Z",
+      "baseSeenUtc": "2026-11-11T19:50:34.0816888Z",
+      "sourceSeenLocal": "2026-11-11T20:50:23.6512508+01:00",
+      "lasnaSeenLocal": "2026-11-11T20:50:31.7035758+01:00",
+      "baseSeenLocal": "2026-11-11T20:50:34.0816888+01:00",
+      "methodologyNote": "One observed run with 1s polling. Measures first-seen receipt visibility on a single observer clock (including RPC response and 1,000 ms polling interval), not a statistical latency distribution or cross-chain block timestamp delta."
+    }
+  },
+  "settlementOutcomes": {
+    "controlFillReceipt": {
+      "outcome": "FILLED",
+      "label": "Control settlement filled old version-0 quote after pool price move",
+      "chainId": 84532,
+      "transactionHash": "0xe0986ce84d9d4f87b2d8d48ab4169526908d5432a408d71f11a1207591860283",
+      "explorerUrl": "https://sepolia.basescan.org/tx/0xe0986ce84d9d4f87b2d8d48ab4169526908d5432a408d71f11a1207591860283",
+      "status": "0x1",
+      "blockNumber": 57526097,
+      "blockNumberHex": "0x36dc751",
+      "blockHash": "0x20b8bfdf7a036e6187b9445293326f325fe95148788ffb432055570fd7d3f715",
+      "blockTimestamp": 1794427088,
+      "blockTimestampHex": "0x6af4c8d0",
+      "transactionIndex": 4,
+      "from": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+      "to": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+      "settlement": "0x571d89770382C0697bF94523eB7dc56288fA6346",
+      "gasUsed": 153254,
+      "gasUsedHex": "0x256a6",
+      "effectiveGasPriceHex": "0x4c4b41",
+      "decodedQuoteFilled": {
+        "event": "QuoteFilled(bytes32,uint256,address,uint256)",
+        "topic0": "0xe5cfa2320ef6f22a097d4a0caaf8da3bec198108446594f615ae8b82f910fd95",
+        "quoteHash": "0x7709fd9a03873b63d1c142f2af7f81c81b1a66f5bec2da147382b0109f571ca4",
+        "nonce": "1",
+        "taker": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+        "version": "0"
+      },
+      "logs": [
+        {
+          "address": "0x571d89770382c0697bf94523eb7dc56288fa6346",
+          "topics": [
+            "0xe5cfa2320ef6f22a097d4a0caaf8da3bec198108446594f615ae8b82f910fd95",
+            "0x7709fd9a03873b63d1c142f2af7f81c81b1a66f5bec2da147382b0109f571ca4",
+            "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "0x0000000000000000000000002886842113b6afaf4603b853c43ff9e49c3585e4"
+          ],
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "logIndex": 4
+        }
+      ]
+    },
+    "staleProtectedQuoteRejection": {
+      "outcome": "REJECTED_STALE_VERSION",
+      "evidenceType": "simulated_eth_call",
+      "label": "Simulated call against the live contract (eth_call)",
+      "chainId": 84532,
+      "rpcMethod": "eth_call",
+      "from": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+      "to": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+      "targetSettlement": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+      "callSignature": "fill(address,(address,address,address,address,uint256,uint256,uint256,uint256,uint256),bytes)",
+      "calldata": "0xd2fb78e0000000000000000000000000216e52c338c6ce0197d5e3bcc4e99c94c12e359e000000000000000000000000e87b50d0d9a2eb84e484d9dfb385e14a366a81bf0000000000000000000000002886842113b6afaf4603b853c43ff9e49c3585e4000000000000000000000000d498ffb35de781dff2efdc310cf701b57acb6ad800000000000000000000000054aa3f15ddf203dc17766941405ef9f801ba0adc0000000000000000000000000000000000000000000000056bc75e2d631000000000000000000000000000000000000000000000000000056901e3b8d5535f98000000000000000000000000000000000000000000000000000000006afe009b0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001600000000000000000000000000000000000000000000000000000000000000041b2b306712c3ef7f0df40f7aec4950937639b2b320a6126e315c00f99f453c847757d2cc895a7999338c9ceea30d67bf9e91692a3585402c22a61eee80cfff24a1b00000000000000000000000000000000000000000000000000000000000000",
+      "observedBaseBlockTimestamp": 1794427069,
+      "observedBaseBlockTimestampUtc": "2026-11-11T19:57:49Z",
+      "quoteExpiry": 1795031195,
+      "quoteExpiryUtc": "2026-11-18T19:46:35Z",
+      "unexpiredAtCallTime": true,
+      "rawRevertData": "0x29a199d700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+      "decodedError": {
+        "name": "StaleQuoteVersion",
+        "signature": "StaleQuoteVersion(uint256,uint256)",
+        "selector": "0x29a199d7",
+        "args": {
+          "signedVersion": "0",
+          "currentVersion": "1"
+        },
+        "formatted": "StaleQuoteVersion(0, 1)"
+      },
+      "nonce1RemainedUnused": true
+    },
+    "freshProtectedFillReceipt": {
+      "outcome": "FILLED",
+      "label": "Protected settlement filled fresh version-1 quote repriced to post-swap pool reserves",
+      "chainId": 84532,
+      "transactionHash": "0x63b51f771fc8e213be8cbf1b5ed1a0953c53d38bcd12360292d71eed663b9486",
+      "explorerUrl": "https://sepolia.basescan.org/tx/0x63b51f771fc8e213be8cbf1b5ed1a0953c53d38bcd12360292d71eed663b9486",
+      "status": "0x1",
+      "blockNumber": 57526801,
+      "blockNumberHex": "0x36dca11",
+      "blockHash": "0xc52889823171004b1ae256be4d0acf1ca8a2240fb6b195b25abce3f60e63dc29",
+      "blockTimestamp": 1794427229,
+      "blockTimestampHex": "0x6af4c95d",
+      "transactionIndex": 3,
+      "from": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+      "to": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+      "settlement": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+      "gasUsed": 121189,
+      "gasUsedHex": "0x1d965",
+      "effectiveGasPriceHex": "0x5b8d80",
+      "decodedQuoteFilled": {
+        "event": "QuoteFilled(bytes32,uint256,address,uint256)",
+        "topic0": "0xe5cfa2320ef6f22a097d4a0caaf8da3bec198108446594f615ae8b82f910fd95",
+        "quoteHash": "0xa6b40593a1b9d0c3807c0a3996d84c3d135715a71c84e95d03053830c57da640",
+        "nonce": "2",
+        "taker": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+        "version": "1"
+      },
+      "logs": [
+        {
+          "address": "0x216e52c338c6ce0197d5e3bcc4e99c94c12e359e",
+          "topics": [
+            "0xe5cfa2320ef6f22a097d4a0caaf8da3bec198108446594f615ae8b82f910fd95",
+            "0xa6b40593a1b9d0c3807c0a3996d84c3d135715a71c84e95d03053830c57da640",
+            "0x0000000000000000000000000000000000000000000000000000000000000002",
+            "0x0000000000000000000000002886842113b6afaf4603b853c43ff9e49c3585e4"
+          ],
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+          "logIndex": 4
+        }
+      ]
+    }
+  }
+}
