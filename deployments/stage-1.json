@@ -1,0 +1,11 @@
+{
+  "deployer": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+  "emitter": "0xCd3789E4cB5aF0118f2e3b667b98FBa8793CbE9D",
+  "subscriber": "0x269C9B7E8c7C7D11F5EAe7d0Cc0072aA18d38e2a",
+  "receiver": "0xd23d37E513398F934dA1Df396dfD91018E155cab",
+  "emitterTx": "0xf761894a972aace11853b89a7483ad6927c85a3ce709a25165646c30e2e3db4b",
+  "subscriberTx": "0xdc11f664b976fa2d2dcd9b339f416dc655d41ddc4295c7cdcb6c16f6477adf95",
+  "receiverTx": "0x0506090897a9cf63a1762c3827b6e82d47c1a34b896e7f228eee3fadf7fbc053",
+  "wired": true,
+  "funded": true
+}

@@ -1,0 +1,15 @@
+out/
+cache/
+.tools/
+broadcast/
+.env
+.env.*
+!.env.example
+keystores/
+*.pem
+*.key
+*.p12
+*.pfx
+*.secret
+*.secrets
+deployments/stage-1-invalid-crosschain-check.json

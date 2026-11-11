@@ -1,0 +1,49 @@
+{
+  "deployer": "0xe87B50D0d9A2Eb84e484D9dfb385e14A366a81bf",
+  "source": {
+    "tokenA": "0x8D32Fdd31fBAB4F6C484b0F5358d9Ae61d3DEc44",
+    "tokenB": "0x92aFcaAF8932062797c94ec8A1E57E40C93E7F26",
+    "token0": "0x8D32Fdd31fBAB4F6C484b0F5358d9Ae61d3DEc44",
+    "token1": "0x92aFcaAF8932062797c94ec8A1E57E40C93E7F26",
+    "pool": "0x51e7249e7A5a08CAcB388372947b34eE5BbD03ec",
+    "seedTx": "0x67f03c176e281a7fcdaf6b61861e5af626b8eb49f1b31feae5e32959cf28c031",
+    "rehearsalTx": "0x92a225044436d966320b20b58293d833346eb53057e47ac563df66f22d49c37d",
+    "startingReference": "998002996004994006"
+  },
+  "base": {
+    "tokenA": "0xD498FfB35de781dFF2EfDC310cf701B57aCb6aD8",
+    "tokenB": "0x54aA3F15ddF203dC17766941405ef9F801BA0ADC",
+    "control": "0x571d89770382C0697bF94523eB7dc56288fA6346",
+    "protected": "0x216e52c338C6CE0197d5e3bCC4E99C94c12e359e",
+    "taker": "0x2886842113B6aFAf4603b853c43ff9e49C3585e4",
+    "receiver": "0x1f111Ad6583FC4dFACf260821de593029d7e7915",
+    "receiverWired": true,
+    "reserveFunded": true
+  },
+  "lasna": {
+    "subscriber": "0xF4661247F45BC36BdBFdF355De965dE03DB5D467",
+    "receiverWired": true,
+    "reserveFunded": true
+  },
+  "demo": {
+    "expiry": "1795031195",
+    "makerAmount": "100000000000000000000",
+    "initialTakerAmount": "99800299600499400600",
+    "controlSignature": "0xb90c366722f0fd32221bc12f8e677102e68cb7da03f78515c1efa76530c7f4773a8dde92f23f6b72646291a344fd67bd8e3230f908efc4b17ad3d3b3ac4cb9da1c",
+    "protectedSignature": "0xb2b306712c3ef7f0df40f7aec4950937639b2b320a6126e315c00f99f453c847757d2cc895a7999338c9ceea30d67bf9e91692a3585402c22a61eee80cfff24a1b",
+    "qualifyingSwapTx": "0xde5cf4eba5b9226c9a5a26b1d3cd6c9e0dec70fcf996020b69e6080ba3194e68",
+    "sourceSeenUtc": "2026-11-11T20:50:23.6512508+01:00",
+    "pollIntervalMs": 1000,
+    "lasnaReactionTx": "0xa969f4e724be36142bd8a7fb48adf0e6f4f28a16127e09d948e18dc64e9bf75a",
+    "lasnaSeenUtc": "2026-11-11T20:50:31.7035758+01:00",
+    "baseVersionTx": "0x90503742545a0928b9d4fb65a40338341f4f551cc76eeab829933da929d58271",
+    "baseSeenUtc": "2026-11-11T20:50:34.0816888+01:00",
+    "observedLatencyMs": 10430.438,
+    "controlFillTx": "0xe0986ce84d9d4f87b2d8d48ab4169526908d5432a408d71f11a1207591860283",
+    "freshFillTx": "0x63b51f771fc8e213be8cbf1b5ed1a0953c53d38bcd12360292d71eed663b9486",
+    "freshSignature": "0xb0ce3b9c777e09ec7e3e8d43ba3454c51379cf2b722f8dc976a901dde0923a8f154b1c8baee2d6157f104ae7adb1521e7da5f06b7e9d1cb92072a9d239a965f31c",
+    "freshTakerAmount": "95928690448668078000",
+    "freshVersion": "1",
+    "staleRevertData": "0x29a199d700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+  }
+}

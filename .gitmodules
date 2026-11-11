@@ -1,0 +1,3 @@
+[submodule "lib/reactive-lib-omni"]
+	path = lib/reactive-lib-omni
+	url = https://github.com/Reactive-Network/reactive-lib-omni.git
